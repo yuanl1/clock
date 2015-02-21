@@ -1,0 +1,99 @@
+Installing raspian on SD card:
+
+http://elinux.org/RPi_Easy_SD_Card_Setup#Using_the_Linux_command_line
+
+Setup Rasbian on initial boot:
+Expand_rootfs
+Change_password for pi user.
+Advanced settings --> Enable Ssh
+
+Login: pi
+Password: tigerbot
+
+Shutting down:
+sudo shutdown -h now
+
+Setting up wifi:
+http://www.howtogeek.com/167425/how-to-setup-wi-fi-on-your-raspberry-pi-via-the-command-line/
+
+Making it a static ID:
+
+allow-hotplug wlan0
+iface wlan0 inet static
+address 192.168.1.101
+netmask 255.255.255.0
+gateway 192.168.1.1
+nameserver 192.168.1.1
+wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf
+iface default inet dhcp
+
+Understanding wpa-conf vs wpa-roam for static ip address
+http://raspberrypi.stackexchange.com/questions/9257/whats-the-difference-between-wpa-roam-and-wpa-conf-in-the-etc-network-inte
+
+Broadcast hostname:
+Edit the DHCP client configuration to send a hostname, as follows...
+
+sudo nano /etc/dhcp/dhclient.conf
+
+Add the line
+send host-name "raspberrypi";
+
+You can force a refresh by disabling/enabling the ethernet port
+sudo ifdown eth0
+sudo ifup eth0
+
+
+
+Now check that ssh works correctly by trying to login from a different computer:
+ssh pi@<your Raspberry PI's IP address>
+
+Update apt-get:
+sudo apt-get update
+sudo apt-get upgrade
+
+Install node on your raspberry pi:
+http://blog.rueedlinger.ch/2013/03/raspberry-pi-and-nodejs-basic-setup/
+
+sudo mkdir /opt/node
+
+wget http://nodejs.org/dist/v0.10.20/node-v0.10.20-linux-arm-pi.tar.gz
+tar xvzf node-v0.10.20-linux-arm-pi.tar.gz
+sudo cp -r node-v0.10.20-linux-arm-pi/* /opt/node
+
+Add NodeJS to Path:
+
+sudo nano /etc/profile
+
+Before the "export PATH", add the following:
+
+NODE_JS_HOME="/opt/node"
+PATH="$PATH:$NODE_JS_HOME/bin"
+export PATH
+
+You need to now logout and login again to have the PATH changed:
+logout
+
+http://blog.rueedlinger.ch/2013/03/raspberry-pi-and-nodejs-basic-setup/
+Follow instructions to set up auto launch of server
+
+start: sudo /etc/init.d/nodejs.sh start
+stop: sudo /etc/init.d/nodejs.sh stop
+log: /home/pi/nodejs.log
+
+
+Get serial port & express node modules & put into javascript folder:
+cd ~
+mkdir Projects
+cd ./Projects
+mkdir javascript
+cd ./javascript
+npm install serialport
+npm install express
+
+//BACKUP THE SD CARD
+sudo dd if=/dev/sdx of=/path/to/image bs=1M
+
+//Restore from SD Card
+sudo dd if=rpi_backkup1.iso of=/dev/sdx bs=1024
+
+

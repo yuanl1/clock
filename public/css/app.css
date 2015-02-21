@@ -1,0 +1,90 @@
+html {
+    min-height: 850px;
+    height: 100%;
+}
+
+body {
+    height: 100%;
+    background: #333;
+    color: #fff;
+    font: 300 100.1% "Helvetica Neue", Helvetica, "Arial Unicode MS", Arial, sans-serif;
+}
+#app-pane {
+    height: 100%;
+    min-height: 600px;
+    min-width: 1060px;
+}
+
+#content-pane {
+    display : inline-block;
+    vertical-align : top;
+    padding: 5px;
+}
+
+#lhp {
+    display : inline-block;
+    vertical-align: top;
+    height: 100%;
+    background-color: #ff7a00;
+    border-right: 2px solid white;
+}
+
+#lhp .accordion-group {
+    margin-bottom: -2px;
+    margin-right: -2px;
+    border-width: 2px;
+    border-color: white;
+    border-radius: 0px;
+}
+
+#lhp .accordion-inner {
+    border-top-width: 2px;
+    border-color: white;
+    min-height: 30px;
+}
+
+#lhp a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+
+
+#lhp .option-label {
+    line-height: 30px;
+}
+
+#lhp .centered-text {
+    text-align: center;
+}
+
+#lhp .button-container {
+    padding-bottom: 10px;
+}
+
+#lhp .nav-tabs > .active > a {
+    background-color: #ff7a00;
+}
+
+#lhp .pie-preset {
+    cursor: pointer;
+    display: inline-block;
+    padding-left: 15px;
+}
+
+#lhp .btn-list {
+    border-radius: 0px;
+}
+
+#color-input {
+    float : right;
+}
+
+#group-presets-table {
+    width: 100%;
+}
+
+#app-toolbar {
+    width: 100%;
+}
+

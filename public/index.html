@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Clock Control</title>
+
+    <link href="img/apple-touch-icon-120x120.png" rel="apple-touch-icon"/>
+    <link href="img/apple-touch-icon-76x76.png" rel="apple-touch-icon" sizes="76x76"/>
+    <link href="img/apple-touch-icon-120x120.png" rel="apple-touch-icon" sizes="120x120"/>
+
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="css/app.css"/>
+
+    <script src="js/jquery.js"></script>
+    <script src="js/raphael.js"></script>
+    <script src="js/colorpicker.js"></script>
+    <script src="js/angular.js"></script>
+    <script src="js/ui-bootstrap-tpls-0.6.0.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/directives.js"></script>
+</head>
+<body ng-app="clockApp">
+    <div id="app-pane" ng-controller="ClockCtrl">
+        <div id="lhp">
+            <accordion>
+                <accordion-group heading="Color Picker" is-open="accordion.colorPicker">
+                    <div colorpicker></div>
+                    <!--tabset>
+                        <tab heading="Grid"></tab>
+                        <tab heading="Wheel">
+                            <div colorpicker></div>
+                        </tab>
+                    </tabset-->
+                    <div class="centered-text">
+                        <span>R: {{data.activeRgb.r}}</span>
+                        <span>G: {{data.activeRgb.g}}</span>
+                        <span>B: {{data.activeRgb.b}}</span>
+                    </div>
+                </accordion-group>
+
+                <accordion-group heading="Groups" is-open="accordion.groups">
+                    <tabset>
+                        <tab heading="Presets">
+                            <table id="group-presets-table">
+                                <tr>
+                                    <td>
+                                        <div class="pie-preset" ng-click="SetPresetGroup(1)">
+                                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100" height="100" class="group-preset">
+                                            <path fill="rgb(0, 204, 0)" stroke="#ffffff" d="M50.5,50.5L95.5,50.5A45,45,0,0,0,88.97114317029974,27.500000000000004Z" stroke-width="1"></path>
+                                            <path fill="rgb(0, 204, 0)" stroke="#ffffff" d="M50.5,50.5L88.97114317029974,27.500000000000004A45,45,0,0,0,72.5,11.02885682970026Z" stroke-width="1"></path>
+                                            <path fill="rgb(0, 204, 0)" stroke="#ffffff" d="M50.5,50.5L72.5,11.02885682970026A45,45,0,0,0,50.5,5.5Z" stroke-width="1"></path>
+                                            <path fill="rgb(0, 204, 0)" stroke="#ffffff" d="M50.5,50.5L50.5,5.5A45,45,0,0,0,27.50000000000001,11.02885682970026Z" stroke-width="1"></path>
+                                            <path fill="rgb(0, 204, 0)" stroke="#ffffff" d="M50.49992841485013,50.49992841485013L27.49992841485013,11.028928414850135A45,45,0,0,0,11.028928414850132,27.499928414850135Z" stroke-width="1" transform="  "></path>
+                                            <path fill="rgb(0, 204, 0)" stroke="#ffffff" d="M50.5,50.5L11.02885682970026,27.500000000000004A45,45,0,0,0,5.5,49.99999999999999Z" stroke-width="1"></path>
+                                            <path fill="rgb(255, 0, 0)" stroke="#ffffff" d="M50.5,50.5L5.5,49.99999999999999A45,45,0,0,0,11.02885682970026,72.5Z" stroke-width="1"></path>
+                                            <path fill="rgb(255, 0, 0)" stroke="#ffffff" d="M50.5,50.5L11.02885682970026,72.5A45,45,0,0,0,27.49999999999998,88.97114317029973Z" stroke-width="1"></path>
+                                            <path fill="rgb(255, 0, 0)" stroke="#ffffff" d="M50.50108468188772,50.50083433981469L27.498915318112285,88.97411761659637A45.000000000000014,45.000000000000014,0,0,0,49.99908098566064,95.4991656601854Z" stroke-width="1" transform="  "></path>
+                                            <path fill="rgb(255, 0, 0)" stroke="#ffffff" d="M50.5,50.5L49.99999999999999,95.5A45,45,0,0,0,72.5,88.97114317029974Z" stroke-width="1"></path>
+                                            <path fill="rgb(255, 0, 0)" stroke="#ffffff" d="M50.5,50.5L72.5,88.97114317029974A45,45,0,0,0,88.97114317029973,72.50000000000003Z" stroke-width="1"></path>
+                                            <path fill="rgb(255, 0, 0)" stroke="#ffffff" d="M50.5,50.5L88.97114317029973,72.50000000000003A45,45,0,0,0,95.5,50.000000000000014Z" stroke-width="1"></path>
+                                        </svg>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="pie-preset" ng-click="SetPresetGroup(2)">
+                                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100" height="100" class="group-preset">
+                                            <path fill="rgb(0, 204, 0)" stroke="#ffffff" d="M50.5,50.5L95.5,50.5A45,45,0,0,0,88.97114317029974,27.500000000000004Z" stroke-width="1"></path>
+                                            <path fill="rgb(0, 204, 0)" stroke="#ffffff" d="M50.5,50.5L88.97114317029974,27.500000000000004A45,45,0,0,0,72.5,11.02885682970026Z" stroke-width="1"></path>
+                                            <path fill="rgb(0, 204, 0)" stroke="#ffffff" d="M50.5,50.5L72.5,11.02885682970026A45,45,0,0,0,50.5,5.5Z" stroke-width="1"></path>
+                                            <path fill="rgb(255, 0, 0)" stroke="#ffffff" d="M50.5,50.5L50.5,5.5A45,45,0,0,0,27.50000000000001,11.02885682970026Z" stroke-width="1"></path>
+                                            <path fill="rgb(255, 0, 0)" stroke="#ffffff" d="M50.49992841485013,50.49992841485013L27.49992841485013,11.028928414850135A45,45,0,0,0,11.028928414850132,27.499928414850135Z" stroke-width="1" transform="  "></path>
+                                            <path fill="rgb(255, 0, 0)" stroke="#ffffff" d="M50.5,50.5L11.02885682970026,27.500000000000004A45,45,0,0,0,5.5,49.99999999999999Z" stroke-width="1"></path>
+                                            <path fill="rgb(255, 0, 0)" stroke="#ffffff" d="M50.5,50.5L5.5,49.99999999999999A45,45,0,0,0,11.02885682970026,72.5Z" stroke-width="1"></path>
+                                            <path fill="rgb(255, 0, 0)" stroke="#ffffff" d="M50.5,50.5L11.02885682970026,72.5A45,45,0,0,0,27.49999999999998,88.97114317029973Z" stroke-width="1"></path>
+                                            <path fill="rgb(255, 0, 0)" stroke="#ffffff" d="M50.50108468188772,50.50083433981469L27.498915318112285,88.97411761659637A45.000000000000014,45.000000000000014,0,0,0,49.99908098566064,95.4991656601854Z" stroke-width="1" transform="  "></path>
+                                            <path fill="rgb(0, 204, 0)" stroke="#ffffff" d="M50.5,50.5L49.99999999999999,95.5A45,45,0,0,0,72.5,88.97114317029974Z" stroke-width="1"></path>
+                                            <path fill="rgb(0, 204, 0)" stroke="#ffffff" d="M50.5,50.5L72.5,88.97114317029974A45,45,0,0,0,88.97114317029973,72.50000000000003Z" stroke-width="1"></path>
+                                            <path fill="rgb(0, 204, 0)" stroke="#ffffff" d="M50.5,50.5L88.97114317029973,72.50000000000003A45,45,0,0,0,95.5,50.000000000000014Z" stroke-width="1"></path>
+                                        </svg>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="pie-preset" ng-click="SetPresetGroup(3)">
+                                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100" height="100" class="group-preset">
+                                            <path fill="rgb(0, 204, 0)" stroke="#ffffff" d="M50.5,50.5L95.5,50.5A45,45,0,0,0,88.97114317029974,27.500000000000004Z" stroke-width="1"></path>
+                                            <path fill="rgb(0, 204, 0)" stroke="#ffffff" d="M50.5,50.5L88.97114317029974,27.500000000000004A45,45,0,0,0,72.5,11.02885682970026Z" stroke-width="1"></path>
+                                            <path fill="rgb(0, 204, 0)" stroke="#ffffff" d="M50.5,50.5L72.5,11.02885682970026A45,45,0,0,0,50.5,5.5Z" stroke-width="1"></path>
+                                            <path fill="rgb(255, 0, 0)" stroke="#ffffff" d="M50.5,50.5L50.5,5.5A45,45,0,0,0,27.50000000000001,11.02885682970026Z" stroke-width="1"></path>
+                                            <path fill="rgb(255, 0, 0)" stroke="#ffffff" d="M50.49992841485013,50.49992841485013L27.49992841485013,11.028928414850135A45,45,0,0,0,11.028928414850132,27.499928414850135Z" stroke-width="1" transform="  "></path>
+                                            <path fill="rgb(255, 0, 0)" stroke="#ffffff" d="M50.5,50.5L11.02885682970026,27.500000000000004A45,45,0,0,0,5.5,49.99999999999999Z" stroke-width="1"></path>
+                                            <path fill="rgb(255, 0, 0)" stroke="#ffffff" d="M50.5,50.5L5.5,49.99999999999999A45,45,0,0,0,11.02885682970026,72.5Z" stroke-width="1"></path>
+                                            <path fill="rgb(18, 64, 171)" stroke="#ffffff" d="M50.5,50.5L11.02885682970026,72.5A45,45,0,0,0,27.49999999999998,88.97114317029973Z" stroke-width="1"></path>
+                                            <path fill="rgb(18, 64, 171)" stroke="#ffffff" d="M50.50108468188772,50.50083433981469L27.498915318112285,88.97411761659637A45.000000000000014,45.000000000000014,0,0,0,49.99908098566064,95.4991656601854Z" stroke-width="1" transform="  "></path>
+                                            <path fill="rgb(18, 64, 171)" stroke="#ffffff" d="M50.5,50.5L49.99999999999999,95.5A45,45,0,0,0,72.5,88.97114317029974Z" stroke-width="1"></path>
+                                            <path fill="rgb(18, 64, 171)" stroke="#ffffff" d="M50.5,50.5L72.5,88.97114317029974A45,45,0,0,0,88.97114317029973,72.50000000000003Z" stroke-width="1"></path>
+                                            <path fill="rgb(0, 204, 0)" stroke="#ffffff" d="M50.5,50.5L88.97114317029973,72.50000000000003A45,45,0,0,0,95.5,50.000000000000014Z" stroke-width="1"></path>
+                                        </svg>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="pie-preset" ng-click="SetPresetGroup(4)">
+                                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100" height="100" class="group-preset">
+                                            <path fill="rgb(0, 204, 0)" stroke="#ffffff" d="M50.5,50.5L95.5,50.5A45,45,0,0,0,88.97114317029974,27.500000000000004Z" stroke-width="1"></path>
+                                            <path fill="rgb(255, 0, 0)" stroke="#ffffff" d="M50.5,50.5L88.97114317029974,27.500000000000004A45,45,0,0,0,72.5,11.02885682970026Z" stroke-width="1"></path>
+                                            <path fill="rgb(255, 0, 0)" stroke="#ffffff" d="M50.5,50.5L72.5,11.02885682970026A45,45,0,0,0,50.5,5.5Z" stroke-width="1"></path>
+                                            <path fill="rgb(255, 0, 0)" stroke="#ffffff" d="M50.5,50.5L50.5,5.5A45,45,0,0,0,27.50000000000001,11.02885682970026Z" stroke-width="1"></path>
+                                            <path fill="rgb(255, 0, 0)" stroke="#ffffff" d="M50.49992841485013,50.49992841485013L27.49992841485013,11.028928414850135A45,45,0,0,0,11.028928414850132,27.499928414850135Z" stroke-width="1" transform="  "></path>
+                                            <path fill="rgb(18, 64, 171)" stroke="#ffffff" d="M50.5,50.5L11.02885682970026,27.500000000000004A45,45,0,0,0,5.5,49.99999999999999Z" stroke-width="1"></path>
+                                            <path fill="rgb(18, 64, 171)" stroke="#ffffff" d="M50.5,50.5L5.5,49.99999999999999A45,45,0,0,0,11.02885682970026,72.5Z" stroke-width="1"></path>
+                                            <path fill="rgb(18, 64, 171)" stroke="#ffffff" d="M50.5,50.5L11.02885682970026,72.5A45,45,0,0,0,27.49999999999998,88.97114317029973Z" stroke-width="1"></path>
+                                            <path fill="rgb(18, 64, 171)" stroke="#ffffff" d="M50.50108468188772,50.50083433981469L27.498915318112285,88.97411761659637A45.000000000000014,45.000000000000014,0,0,0,49.99908098566064,95.4991656601854Z" stroke-width="1" transform="  "></path>
+                                            <path fill="rgb(0, 204, 0)" stroke="#ffffff" d="M50.5,50.5L49.99999999999999,95.5A45,45,0,0,0,72.5,88.97114317029974Z" stroke-width="1"></path>
+                                            <path fill="rgb(0, 204, 0)" stroke="#ffffff" d="M50.5,50.5L72.5,88.97114317029974A45,45,0,0,0,88.97114317029973,72.50000000000003Z" stroke-width="1"></path>
+                                            <path fill="rgb(0, 204, 0)" stroke="#ffffff" d="M50.5,50.5L88.97114317029973,72.50000000000003A45,45,0,0,0,95.5,50.000000000000014Z" stroke-width="1"></path>
+                                        </svg>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="pie-preset" ng-click="SetPresetGroup(5)">
+                                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100" height="100" class="group-preset">
+                                            <path fill="rgb(0, 204, 0)" stroke="#ffffff" d="M50.5,50.5L95.5,50.5A45,45,0,0,0,88.97114317029974,27.500000000000004Z" stroke-width="1"></path>
+                                            <path fill="rgb(0, 204, 0)" stroke="#ffffff" d="M50.5,50.5L88.97114317029974,27.500000000000004A45,45,0,0,0,72.5,11.02885682970026Z" stroke-width="1"></path>
+                                            <path fill="rgb(0, 204, 0)" stroke="#ffffff" d="M50.5,50.5L72.5,11.02885682970026A45,45,0,0,0,50.5,5.5Z" stroke-width="1"></path>
+                                            <path fill="rgb(18, 64, 171)" stroke="#ffffff" d="M50.5,50.5L50.5,5.5A45,45,0,0,0,27.50000000000001,11.02885682970026Z" stroke-width="1"></path>
+                                            <path fill="rgb(18, 64, 171)" stroke="#ffffff" d="M50.49992841485013,50.49992841485013L27.49992841485013,11.028928414850135A45,45,0,0,0,11.028928414850132,27.499928414850135Z" stroke-width="1" transform="  "></path>
+                                            <path fill="rgb(18, 64, 171)" stroke="#ffffff" d="M50.5,50.5L11.02885682970026,27.500000000000004A45,45,0,0,0,5.5,49.99999999999999Z" stroke-width="1"></path>
+                                            <path fill="rgb(255, 0, 0)" stroke="#ffffff" d="M50.5,50.5L5.5,49.99999999999999A45,45,0,0,0,11.02885682970026,72.5Z" stroke-width="1"></path>
+                                            <path fill="rgb(255, 0, 0)" stroke="#ffffff" d="M50.5,50.5L11.02885682970026,72.5A45,45,0,0,0,27.49999999999998,88.97114317029973Z" stroke-width="1"></path>
+                                            <path fill="rgb(255, 0, 0)" stroke="#ffffff" d="M50.50108468188772,50.50083433981469L27.498915318112285,88.97411761659637A45.000000000000014,45.000000000000014,0,0,0,49.99908098566064,95.4991656601854Z" stroke-width="1" transform="  "></path>
+                                            <path fill="rgb(113, 9, 170)" stroke="#ffffff" d="M50.5,50.5L49.99999999999999,95.5A45,45,0,0,0,72.5,88.97114317029974Z" stroke-width="1"></path>
+                                            <path fill="rgb(113, 9, 170)" stroke="#ffffff" d="M50.5,50.5L72.5,88.97114317029974A45,45,0,0,0,88.97114317029973,72.50000000000003Z" stroke-width="1"></path>
+                                            <path fill="rgb(113, 9, 170)" stroke="#ffffff" d="M50.5,50.5L88.97114317029973,72.50000000000003A45,45,0,0,0,95.5,50.000000000000014Z" stroke-width="1"></path>
+                                        </svg>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="pie-preset" ng-click="SetPresetGroup(6)">
+                                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100" height="100" class="group-preset">
+                                            <path fill="rgb(255, 0, 0)" stroke="#ffffff" d="M50.5,50.5L95.5,50.5A45,45,0,0,0,88.97114317029974,27.500000000000004Z" stroke-width="1"></path>
+                                            <path fill="rgb(0, 204, 0)" stroke="#ffffff" d="M50.5,50.5L88.97114317029974,27.500000000000004A45,45,0,0,0,72.5,11.02885682970026Z" stroke-width="1"></path>
+                                            <path fill="rgb(255, 0, 0)" stroke="#ffffff" d="M50.5,50.5L72.5,11.02885682970026A45,45,0,0,0,50.5,5.5Z" stroke-width="1"></path>
+                                            <path fill="rgb(0, 204, 0)" stroke="#ffffff" d="M50.5,50.5L50.5,5.5A45,45,0,0,0,27.50000000000001,11.02885682970026Z" stroke-width="1"></path>
+                                            <path fill="rgb(255, 0, 0)" stroke="#ffffff" d="M50.49992841485013,50.49992841485013L27.49992841485013,11.028928414850135A45,45,0,0,0,11.028928414850132,27.499928414850135Z" stroke-width="1" transform="  "></path>
+                                            <path fill="rgb(0, 204, 0)" stroke="#ffffff" d="M50.5,50.5L11.02885682970026,27.500000000000004A45,45,0,0,0,5.5,49.99999999999999Z" stroke-width="1"></path>
+                                            <path fill="rgb(255, 0, 0)" stroke="#ffffff" d="M50.5,50.5L5.5,49.99999999999999A45,45,0,0,0,11.02885682970026,72.5Z" stroke-width="1"></path>
+                                            <path fill="rgb(0, 204, 0)" stroke="#ffffff" d="M50.5,50.5L11.02885682970026,72.5A45,45,0,0,0,27.49999999999998,88.97114317029973Z" stroke-width="1"></path>
+                                            <path fill="rgb(255, 0, 0)" stroke="#ffffff" d="M50.50108468188772,50.50083433981469L27.498915318112285,88.97411761659637A45.000000000000014,45.000000000000014,0,0,0,49.99908098566064,95.4991656601854Z" stroke-width="1" transform="  "></path>
+                                            <path fill="rgb(0, 204, 0)" stroke="#ffffff" d="M50.5,50.5L49.99999999999999,95.5A45,45,0,0,0,72.5,88.97114317029974Z" stroke-width="1"></path>
+                                            <path fill="rgb(255, 0, 0)" stroke="#ffffff" d="M50.5,50.5L72.5,88.97114317029974A45,45,0,0,0,88.97114317029973,72.50000000000003Z" stroke-width="1"></path>
+                                            <path fill="rgb(0, 204, 0)" stroke="#ffffff" d="M50.5,50.5L88.97114317029973,72.50000000000003A45,45,0,0,0,95.5,50.000000000000014Z" stroke-width="1"></path>
+                                        </svg>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="pie-preset" ng-click="SetPresetGroup(7)">
+                                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100" height="100" class="group-preset">
+                                            <path fill="rgb(255, 0, 0)" stroke="#ffffff" d="M50.5,50.5L95.5,50.5A45,45,0,0,0,88.97114317029974,27.500000000000004Z" stroke-width="1"></path>
+                                            <path fill="rgb(255, 0, 0)" stroke="#ffffff" d="M50.5,50.5L88.97114317029974,27.500000000000004A45,45,0,0,0,72.5,11.02885682970026Z" stroke-width="1"></path>
+                                            <path fill="rgb(0, 204, 0)" stroke="#ffffff" d="M50.5,50.5L72.5,11.02885682970026A45,45,0,0,0,50.5,5.5Z" stroke-width="1"></path>
+                                            <path fill="rgb(0, 204, 0)" stroke="#ffffff" d="M50.5,50.5L50.5,5.5A45,45,0,0,0,27.50000000000001,11.02885682970026Z" stroke-width="1"></path>
+                                            <path fill="rgb(255, 0, 0)" stroke="#ffffff" d="M50.49992841485013,50.49992841485013L27.49992841485013,11.028928414850135A45,45,0,0,0,11.028928414850132,27.499928414850135Z" stroke-width="1" transform="  "></path>
+                                            <path fill="rgb(255, 0, 0)" stroke="#ffffff" d="M50.5,50.5L11.02885682970026,27.500000000000004A45,45,0,0,0,5.5,49.99999999999999Z" stroke-width="1"></path>
+                                            <path fill="rgb(0, 204, 0)" stroke="#ffffff" d="M50.5,50.5L5.5,49.99999999999999A45,45,0,0,0,11.02885682970026,72.5Z" stroke-width="1"></path>
+                                            <path fill="rgb(0, 204, 0)" stroke="#ffffff" d="M50.5,50.5L11.02885682970026,72.5A45,45,0,0,0,27.49999999999998,88.97114317029973Z" stroke-width="1"></path>
+                                            <path fill="rgb(255, 0, 0)" stroke="#ffffff" d="M50.50108468188772,50.50083433981469L27.498915318112285,88.97411761659637A45.000000000000014,45.000000000000014,0,0,0,49.99908098566064,95.4991656601854Z" stroke-width="1" transform="  "></path>
+                                            <path fill="rgb(255, 0, 0)" stroke="#ffffff" d="M50.5,50.5L49.99999999999999,95.5A45,45,0,0,0,72.5,88.97114317029974Z" stroke-width="1"></path>
+                                            <path fill="rgb(0, 204, 0)" stroke="#ffffff" d="M50.5,50.5L72.5,88.97114317029974A45,45,0,0,0,88.97114317029973,72.50000000000003Z" stroke-width="1"></path>
+                                            <path fill="rgb(0, 204, 0)" stroke="#ffffff" d="M50.5,50.5L88.97114317029973,72.50000000000003A45,45,0,0,0,95.5,50.000000000000014Z" stroke-width="1"></path>
+                                        </svg>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="pie-preset" ng-click="SetPresetGroup(8)">
+                                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100" height="100" class="group-preset">
+                                            <path fill="rgb(255, 0, 0)" stroke="#ffffff" d="M50.5,50.5L95.5,50.5A45,45,0,0,0,88.97114317029974,27.500000000000004Z" stroke-width="1"></path>
+                                            <path fill="rgb(0, 204, 0)" stroke="#ffffff" d="M50.5,50.5L88.97114317029974,27.500000000000004A45,45,0,0,0,72.5,11.02885682970026Z" stroke-width="1"></path>
+                                            <path fill="rgb(0, 204, 0)" stroke="#ffffff" d="M50.5,50.5L72.5,11.02885682970026A45,45,0,0,0,50.5,5.5Z" stroke-width="1"></path>
+                                            <path fill="rgb(255, 0, 0)" stroke="#ffffff" d="M50.5,50.5L50.5,5.5A45,45,0,0,0,27.50000000000001,11.02885682970026Z" stroke-width="1"></path>
+                                            <path fill="rgb(255, 0, 0)" stroke="#ffffff" d="M50.49992841485013,50.49992841485013L27.49992841485013,11.028928414850135A45,45,0,0,0,11.028928414850132,27.499928414850135Z" stroke-width="1" transform="  "></path>
+                                            <path fill="rgb(0, 204, 0)" stroke="#ffffff" d="M50.5,50.5L11.02885682970026,27.500000000000004A45,45,0,0,0,5.5,49.99999999999999Z" stroke-width="1"></path>
+                                            <path fill="rgb(0, 204, 0)" stroke="#ffffff" d="M50.5,50.5L5.5,49.99999999999999A45,45,0,0,0,11.02885682970026,72.5Z" stroke-width="1"></path>
+                                            <path fill="rgb(255, 0, 0)" stroke="#ffffff" d="M50.5,50.5L11.02885682970026,72.5A45,45,0,0,0,27.49999999999998,88.97114317029973Z" stroke-width="1"></path>
+                                            <path fill="rgb(255, 0, 0)" stroke="#ffffff" d="M50.50108468188772,50.50083433981469L27.498915318112285,88.97411761659637A45.000000000000014,45.000000000000014,0,0,0,49.99908098566064,95.4991656601854Z" stroke-width="1" transform="  "></path>
+                                            <path fill="rgb(0, 204, 0)" stroke="#ffffff" d="M50.5,50.5L49.99999999999999,95.5A45,45,0,0,0,72.5,88.97114317029974Z" stroke-width="1"></path>
+                                            <path fill="rgb(0, 204, 0)" stroke="#ffffff" d="M50.5,50.5L72.5,88.97114317029974A45,45,0,0,0,88.97114317029973,72.50000000000003Z" stroke-width="1"></path>
+                                            <path fill="rgb(255, 0, 0)" stroke="#ffffff" d="M50.5,50.5L88.97114317029973,72.50000000000003A45,45,0,0,0,95.5,50.000000000000014Z" stroke-width="1"></path>
+                                        </svg>
+                                        </div>
+                                    </td>
+                                <tr>
+                                    <td>
+                                        <div class="pie-preset" ng-click="SetPresetGroup(9)">
+                                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100" height="100" class="group-preset">
+                                            <path fill="rgb(0, 204, 0)" stroke="#ffffff" d="M50.5,50.5L95.5,50.5A45,45,0,0,0,88.97114317029974,27.500000000000004Z" stroke-width="1"></path>
+                                            <path fill="rgb(255, 0, 0)" stroke="#ffffff" d="M50.5,50.5L88.97114317029974,27.500000000000004A45,45,0,0,0,72.5,11.02885682970026Z" stroke-width="1"></path>
+                                            <path fill="rgb(18, 64, 171)" stroke="#ffffff" d="M50.5,50.5L72.5,11.02885682970026A45,45,0,0,0,50.5,5.5Z" stroke-width="1"></path>
+                                            <path fill="rgb(0, 204, 0)" stroke="#ffffff" d="M50.5,50.5L50.5,5.5A45,45,0,0,0,27.50000000000001,11.02885682970026Z" stroke-width="1"></path>
+                                            <path fill="rgb(255, 0, 0)" stroke="#ffffff" d="M50.49992841485013,50.49992841485013L27.49992841485013,11.028928414850135A45,45,0,0,0,11.028928414850132,27.499928414850135Z" stroke-width="1" transform="  "></path>
+                                            <path fill="rgb(18, 64, 171)" stroke="#ffffff" d="M50.5,50.5L11.02885682970026,27.500000000000004A45,45,0,0,0,5.5,49.99999999999999Z" stroke-width="1"></path>
+                                            <path fill="rgb(0, 204, 0)" stroke="#ffffff" d="M50.5,50.5L5.5,49.99999999999999A45,45,0,0,0,11.02885682970026,72.5Z" stroke-width="1"></path>
+                                            <path fill="rgb(255, 0, 0)" stroke="#ffffff" d="M50.5,50.5L11.02885682970026,72.5A45,45,0,0,0,27.49999999999998,88.97114317029973Z" stroke-width="1"></path>
+                                            <path fill="rgb(18, 64, 171)" stroke="#ffffff" d="M50.50108468188772,50.50083433981469L27.498915318112285,88.97411761659637A45.000000000000014,45.000000000000014,0,0,0,49.99908098566064,95.4991656601854Z" stroke-width="1" transform="  "></path>
+                                            <path fill="rgb(0, 204, 0)" stroke="#ffffff" d="M50.5,50.5L49.99999999999999,95.5A45,45,0,0,0,72.5,88.97114317029974Z" stroke-width="1"></path>
+                                            <path fill="rgb(255, 0, 0)" stroke="#ffffff" d="M50.5,50.5L72.5,88.97114317029974A45,45,0,0,0,88.97114317029973,72.50000000000003Z" stroke-width="1"></path>
+                                            <path fill="rgb(18, 64, 171)" stroke="#ffffff" d="M50.5,50.5L88.97114317029973,72.50000000000003A45,45,0,0,0,95.5,50.000000000000014Z" stroke-width="1"></path>
+                                        </svg>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="pie-preset" ng-click="SetPresetGroup(10)">
+                                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100" height="100" class="group-preset">
+                                            <path fill="rgb(0, 204, 0)" stroke="#ffffff" d="M50.5,50.5L95.5,50.5A45,45,0,0,0,88.97114317029974,27.500000000000004Z" stroke-width="1"></path>
+                                            <path fill="rgb(255, 0, 0)" stroke="#ffffff" d="M50.5,50.5L88.97114317029974,27.500000000000004A45,45,0,0,0,72.5,11.02885682970026Z" stroke-width="1"></path>
+                                            <path fill="rgb(18, 64, 171)" stroke="#ffffff" d="M50.5,50.5L72.5,11.02885682970026A45,45,0,0,0,50.5,5.5Z" stroke-width="1"></path>
+                                            <path fill="rgb(113, 9, 170)" stroke="#ffffff" d="M50.5,50.5L50.5,5.5A45,45,0,0,0,27.50000000000001,11.02885682970026Z" stroke-width="1"></path>
+                                            <path fill="rgb(0, 204, 0)" stroke="#ffffff" d="M50.49992841485013,50.49992841485013L27.49992841485013,11.028928414850135A45,45,0,0,0,11.028928414850132,27.499928414850135Z" stroke-width="1" transform="  "></path>
+                                            <path fill="rgb(255, 0, 0)" stroke="#ffffff" d="M50.5,50.5L11.02885682970026,27.500000000000004A45,45,0,0,0,5.5,49.99999999999999Z" stroke-width="1"></path>
+                                            <path fill="rgb(18, 64, 171)" stroke="#ffffff" d="M50.5,50.5L5.5,49.99999999999999A45,45,0,0,0,11.02885682970026,72.5Z" stroke-width="1"></path>
+                                            <path fill="rgb(113, 9, 170)" stroke="#ffffff" d="M50.5,50.5L11.02885682970026,72.5A45,45,0,0,0,27.49999999999998,88.97114317029973Z" stroke-width="1"></path>
+                                            <path fill="rgb(0, 204, 0)" stroke="#ffffff" d="M50.50108468188772,50.50083433981469L27.498915318112285,88.97411761659637A45.000000000000014,45.000000000000014,0,0,0,49.99908098566064,95.4991656601854Z" stroke-width="1" transform="  "></path>
+                                            <path fill="rgb(255, 0, 0)" stroke="#ffffff" d="M50.5,50.5L49.99999999999999,95.5A45,45,0,0,0,72.5,88.97114317029974Z" stroke-width="1"></path>
+                                            <path fill="rgb(18, 64, 171)" stroke="#ffffff" d="M50.5,50.5L72.5,88.97114317029974A45,45,0,0,0,88.97114317029973,72.50000000000003Z" stroke-width="1"></path>
+                                            <path fill="rgb(113, 9, 170)" stroke="#ffffff" d="M50.5,50.5L88.97114317029973,72.50000000000003A45,45,0,0,0,95.5,50.000000000000014Z" stroke-width="1"></path>
+                                        </svg>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tr>
+                            </table>
+                        </tab>
+                        <tab heading="Custom">
+                            <div class="button-container">
+                                <button class="btn btn-primary" ng-click="GroupAll()">Group All</button>
+                                <button class="btn btn-primary" ng-click="ResetGroups()">Reset All</button>
+                            </div>
+                            <table>
+                                <tr ng-repeat="group in data.groups track by $index">
+                                    <td>{{$index + 1}} o'clock</td>
+                                    <td>
+                                        <select ng-model="data.groups[$index]" ng-options="option for option in data.selectableGroups">
+                                        </select>
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </tab>
+                    </tabset>
+                </accordion-group>
+
+                <accordion-group heading="Options" is-open="accordion.options">
+                    <div class="option-label">Name:</div>
+                    <input type="text" ng-model="data.name" />
+                    <div class="button-container">
+                        <button class="btn btn-primary" ng-click="Save()">Save</button>
+                        <button class="btn btn-primary" ng-click="Delete()">Delete</button>
+                    </div>
+                    <div class="option-label">Duration (ms):</div>
+                    <input type="number" ng-model="data.duration"/>
+                    <div class="option-label">Transition Time:</div>
+                    <div class="btn-group button-container">
+                        <button type="button" class="btn btn-primary" ng-model="data.time" btn-radio=200>0s</button>
+                        <button type="button" class="btn btn-primary" ng-model="data.time" btn-radio=1000>1s</button>
+                        <button type="button" class="btn btn-primary" ng-model="data.time" btn-radio=2000>2s</button>
+                        <button type="button" class="btn btn-primary" ng-model="data.time" btn-radio=3000>3s</button>
+                        <button type="button" class="btn btn-primary" ng-model="data.time" btn-radio=4000>4s</button>
+                        <button type="button" class="btn btn-primary" ng-model="data.time" btn-radio=5000>5s</button>
+                    </div>
+                    <div class="option-label">Reset All Settings:</div>
+                    <div class="button-container">
+                        <button class="btn btn-primary" ng-click="TurnOff()">Reset</button>
+                    </div>
+
+                </accordion-group>
+                <accordion-group heading="Saves" is-open="accordion.saves">
+                    <div class="btn-list-container">
+                        <div ng-repeat="preset in data.presets">
+                            <button ng-click="ApplyPreset(preset.name, preset.id)" class="btn btn-large btn-block btn-list" type="button">{{preset.name}}{{(preset.size > 1) ? ' (Anim)' : ''}}</button>
+                        </div>
+                    </div>
+                </accordion-group>
+                <accordion-group heading="Apps" is-open="accordion.apps">
+                </accordion-group>
+
+            </accordion>
+
+        </div>
+        <div id="content-pane">
+            <div id="app-toolbar">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary" ng-disabled=" data.states.length <= 1 " ng-model="data.playAnimation" btn-radio=true ng-click="PlayAnimation()">Play</button>
+                    <button type="button" class="btn btn-primary" ng-disabled=" data.states.length <= 1 " ng-model="data.playAnimation" btn-radio=false ng-click="StopAnimation()" >Stop</button>
+                </div>
+                <button class="btn btn-primary" ng-click="AddState()" >Add</button>
+                <button class="btn btn-primary" ng-disabled="data.states.length <= 1" ng-click="RemoveState()">Remove</button>
+                <button class="btn btn-primary" ng-disabled="data.index == 0" ng-click="ApplyFirstState()">&lt&lt</button>
+                <button class="btn btn-primary" ng-disabled=" data.states.length <= 1 || data.index == 0" ng-click="ApplyPreviousState()">&lt</button>
+                <span>{{data.index + 1}}/{{data.states.length}}</span>
+                <button class="btn btn-primary" ng-disabled=" data.states.length <= 1 || data.index == (data.states.length - 1) " ng-click="ApplyNextState()">&gt</button>
+                <button class="btn btn-primary" ng-disabled="data.index == (data.states.length -1)" ng-click="ApplyLastState()">&gt&gt</button>
+            </div>
+            <div clock size="700" id="clock-container"></div>
+        </div>
+    </div>
+</body>
+</html>
