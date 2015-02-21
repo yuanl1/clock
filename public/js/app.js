@@ -2,12 +2,10 @@ var app = angular.module('clockApp', ['ui.bootstrap']);
 
 app.controller('ClockCtrl', function($scope, $timeout, clockService){
     $scope.data = {
-        isDragging: false,
         time : 1000,
         duration : 5000,
         activeSector : '', //A - L
         activeColor : '#000000', //initial color
-        activeRgb : {r : 0, g : 0, b : 0},
         selectableGroups : ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'],
         groupColors : {
             A : '#000000',
@@ -98,7 +96,6 @@ app.controller('ClockCtrl', function($scope, $timeout, clockService){
         }
         $scope.data.activeSector = "";
         $scope.data.activeColor = "#000000";
-        $scope.data.activeRgb = {r: 0, g: 0, b: 0};
 
         //clear states
         $scope.data.states.splice(1, $scope.data.states.length - 1);
@@ -109,6 +106,13 @@ app.controller('ClockCtrl', function($scope, $timeout, clockService){
 
         //Turn of leds
         clockService.shutdown($scope);
+    }
+
+    $scope.ApplyColorPicker = function(color) {
+        $scope.data.activeColor = color;
+        var group = $scope.data.activeSector;
+        $scope.data.groupColors[group] = color;
+        clockService.send($scope);
     }
 
     function ApplyPreset(index, states){

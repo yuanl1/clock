@@ -24,17 +24,27 @@
         <div id="lhp">
             <accordion>
                 <accordion-group heading="Color Picker" is-open="accordion.colorPicker">
-                    <div colorpicker></div>
-                    <!--tabset>
-                        <tab heading="Grid"></tab>
-                        <tab heading="Wheel">
-                            <div colorpicker></div>
-                        </tab>
-                    </tabset-->
-                    <div class="centered-text">
-                        <span>R: {{data.activeRgb.r}}</span>
-                        <span>G: {{data.activeRgb.g}}</span>
-                        <span>B: {{data.activeRgb.b}}</span>
+                    <div>
+                        <table class="color-picker">
+                            <tr>
+                                <td><div class="color-option red" ng-click="ApplyColorPicker('#FF0000')"></div></td>
+                                <td><div class="color-option orange" ng-click="ApplyColorPicker('#FF4600')"></div></td>
+                                <td><div class="color-option yellow" ng-click="ApplyColorPicker('#FF7800')"></div></td>
+                                <td><div class="color-option green" ng-click="ApplyColorPicker('#00FF00')"></div></td>
+                            </tr>
+                            <tr>                          
+                                <td><div class="color-option magenta" ng-click="ApplyColorPicker('#FF00FF')"></div></td>
+                                <td><div class="color-option purple" ng-click="ApplyColorPicker('#4D00FF')"></div></td>
+                                <td><div class="color-option blue" ng-click="ApplyColorPicker('#0000FF')"></div></td>
+                                <td><div class="color-option cyan" ng-click="ApplyColorPicker('#00FFFF')"></div></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><div class="color-option white" ng-click="ApplyColorPicker('#FFFFFF')"></div></td>
+                                <td><div class="color-option black" ng-click="ApplyColorPicker('#000000')"></div></td>
+                                <td></td>
+                            </tr>
+                        </table>
                     </div>
                 </accordion-group>
 

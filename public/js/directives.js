@@ -213,8 +213,6 @@
                         scope.$apply(function(){
                             scope.data.activeSector = group;
                             scope.data.activeColor = groupColor;
-                            var rgb = $window.Raphael.getRGB(groupColor);
-                            scope.data.activeRgb = {r:rgb.r, g:rgb.g, b:rgb.b};
 
                             //scope.accordion.colorPicker = true; //open the color picker
                         });
@@ -251,11 +249,9 @@
                 clockService.getCurrentLights(updateClockFromData);
 
                 var getCurrentLights = function(){
-                    if(!scope.data.isDragging){
-                        scope.$apply(function(){
-                            clockService.getCurrentLights(updateClockFromData);
-                        });
-                    }
+                    scope.$apply(function(){
+                        clockService.getCurrentLights(updateClockFromData);
+                    });
                 };
 
                 //setInterval(getCurrentLights, 10000);
@@ -290,8 +286,6 @@
                             //Update colors so all sectors in the group match
                             var groupColor = scope.data.groupColors[newGroupLabel];
                             scope.data.activeColor = groupColor;
-                            var rgb = $window.Raphael.getRGB(groupColor);
-                            scope.data.activeRgb = {r:rgb.r, g:rgb.g, b:rgb.b};
                             newGroup.attr('fill', groupColor);
                         }
                     }
@@ -327,48 +321,4 @@
         }
     });
 
-    app.directive("colorpicker", function($window, clockService){
-        return {
-            restrict : 'EA',
-            replace : true,
-            link : function(scope, element, attr){
-                var offset = element.position();
-                var cp = $window.Raphael.colorpicker(offset.left, offset.top, 300, "#ffffff", element[0]);
-
-                cp.onchange = function(color){
-                    scope.$apply(function(){
-                        scope.data.activeColor = color;
-                        var rgb = $window.Raphael.getRGB(color);
-                        scope.data.activeRgb = {r:rgb.r, g:rgb.g, b:rgb.b};
-
-                        var group = scope.data.activeSector;
-                        scope.data.groupColors[group] = color;
-                    })
-                };
-
-                cp.onstarted = function(color){
-                    scope.$apply(function(){
-                        scope.data.isDragging = true;
-                    });
-                };
-
-                cp.onstopped = function(color){
-                    if(scope.data.activeSector){
-                        clockService.send(scope);
-                    }
-                    scope.$apply(function(){
-                        scope.data.isDragging = false;
-                    });
-                };
-
-
-                scope.$watch('data.activeSector', function(){
-                    //if the active sector changes, update the active color
-                    cp.color(scope.data.activeColor);
-                });
-
-            }
-        }
-
-    });
 })();
