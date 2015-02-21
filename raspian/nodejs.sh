@@ -1,9 +1,9 @@
 #!/bin/bash
 
 NODE=/opt/node/bin/node
-SERVER_JS_FILE=/home/pi/Projects/Clock/app.js
+SERVER_JS_FILE=/home/pi/Projects/clock/app.js
 USER=pi
-OUT=/home/pi/nodejs.log
+OUT=/home/pi/Projects/clock/nodejs.log
 
 case "$1" in
 
