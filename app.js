@@ -5,7 +5,7 @@
     var _ = require('underscore');
 
     var sqlite3 = require('sqlite3').verbose();
-    var db = new sqlite3.Database('clock.db');
+    var db = new sqlite3.Database(__dirname + '/db/clock.db');
 
     var serialport = require('serialport');
     var SerialPort = serialport.SerialPort;
