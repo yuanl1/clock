@@ -36,9 +36,12 @@
             var parsed_green_value = parseInt(parsed_data[2]);
             var parsed_blue_value = parseInt(parsed_data[3]);
 
-            cached_light_data[parsed_light_number].r = parsed_red_value;
-            cached_light_data[parsed_light_number].g = parsed_green_value;
-            cached_light_data[parsed_light_number].b = parsed_blue_value;
+            if (parsed_light_number >= 0 && parsed_light_number < cached_light_data.length) {
+                cached_light_data[parsed_light_number].r = parsed_red_value;
+                cached_light_data[parsed_light_number].g = parsed_green_value;
+                cached_light_data[parsed_light_number].b = parsed_blue_value;
+            }
+
         });
     });
 
