@@ -267,7 +267,7 @@
     });
 
     //Start server
-    var port = 80;
+    var port = 8080;
     app.listen(port);
     console.log("Listening on port " + port);
 
