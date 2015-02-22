@@ -319,15 +319,13 @@
                 }, true);
 
                 scope.$watch('data.activeGroups', function(activeGroups){
-                    if(activeGroups.length) {
-                        angular.forEach(groupSets, function(set, key) {
-                            if(_.contains(activeGroups, key)) {
-                                set.stop().animate({transform: "s1.1 1.1 " + cx + " " + cy}, 250);
-                            } else {
-                                set.stop().animate({transform: ""}, 250);
-                            }
-                        });
-                    }
+                    angular.forEach(groupSets, function(set, key) {
+                        if(_.contains(activeGroups, key)) {
+                            set.stop().animate({transform: "s1.1 1.1 " + cx + " " + cy}, 250);
+                        } else {
+                            set.stop().animate({transform: ""}, 250);
+                        }
+                    });
                     
                 }, true);
 
