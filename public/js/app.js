@@ -4,7 +4,7 @@ app.controller('ClockCtrl', function($scope, $timeout, clockService){
     $scope.data = {
         time : 1000,
         duration : 5000,
-        activeSector : '', //A - L
+        activeGroups : [], //A - L
         activeColor : '#000000', //initial color
         selectableGroups : ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'],
         groupColors : {
@@ -85,7 +85,7 @@ app.controller('ClockCtrl', function($scope, $timeout, clockService){
         if(preset === 10)
             $scope.data.groups = ['A', 'B', 'C', 'D', 'A', 'B', 'C', 'D', 'A', 'B', 'C', 'D'];
 
-        $scope.data.activeSector = 'A';
+        $scope.data.activeGroups = [];
     };
 
     $scope.TurnOff = function(){
@@ -94,7 +94,7 @@ app.controller('ClockCtrl', function($scope, $timeout, clockService){
             var group = $scope.data.selectableGroups[i];
             $scope.data.groupColors[group] = "#000000";
         }
-        $scope.data.activeSector = "";
+        $scope.data.activeGroups = [];
         $scope.data.activeColor = "#000000";
 
         //clear states
@@ -110,8 +110,9 @@ app.controller('ClockCtrl', function($scope, $timeout, clockService){
 
     $scope.ApplyColorPicker = function(color) {
         $scope.data.activeColor = color;
-        var group = $scope.data.activeSector;
-        $scope.data.groupColors[group] = color;
+        _.each($scope.data.activeGroups, function(group) {
+            $scope.data.groupColors[group] = color;
+        });
         clockService.send($scope);
     }
 

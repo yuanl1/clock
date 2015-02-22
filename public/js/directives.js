@@ -101,7 +101,8 @@
                 var timeVals = [];
 
                 for(var i = 0; i < 12; i++){
-                    if(scope.data.groups[i] == scope.data.activeSector){
+                    //Check if the current sector's group is in active groups
+                    if(_.contains(scope.data.activeGroups, scope.data.groups[i])){
                         lightNumbers.push(i);
                         rVals.push(red);
                         gVals.push(green);
@@ -204,17 +205,24 @@
 
                     sect.data('label', labels[index]);
 
-                    sect.click(function(){
+                    sect.click(function(e){
                         var label = sect.data('label');
                         var group = scope.data.groups[label];
                         var groupColor = scope.data.groupColors[group];
                         var groupSet = groupSets[group];
 
                         scope.$apply(function(){
-                            scope.data.activeSector = group;
-                            scope.data.activeColor = groupColor;
 
-                            //scope.accordion.colorPicker = true; //open the color picker
+                            if(e.shiftKey) {
+                                if(!_.contains(scope.data.activeGroups, group)) {
+                                    scope.data.activeGroups.push(group);
+                                }
+                            } else {
+                                scope.data.activeGroups = [];
+                                scope.data.activeGroups.push(group);
+                            }
+                            
+                            scope.data.activeColor = groupColor;
                         });
                     });
 
@@ -257,6 +265,7 @@
                 //setInterval(getCurrentLights, 10000);
 
 
+                /** INFO: Disabling group watching since changing groups is disabled
                 scope.$watch('data.groups', function(newValues, oldValues){
                     var changed = false;
                     for(var label = 0; label < newValues.length; label++){
@@ -275,12 +284,12 @@
                             });
 
                             //Change active sector to new group
-                            if(scope.data.activeSector == newGroupLabel){
+                            if(scope.data.activeGroup == newGroupLabel){
                                 //if the active sector doesn't change, we need to manually update the clock
                                 clock.stop().animate({transform: ""}, 250);
                                 newGroup.stop().animate({transform: "s1.1 1.1 " + cx + " " + cy}, 250);
                             } else {
-                                scope.data.activeSector = newGroupLabel;
+                                scope.data.activeGroup = newGroupLabel;
                             }
 
                             //Update colors so all sectors in the group match
@@ -293,6 +302,7 @@
                         clockService.sendAll(scope);
                     }
                 }, true);
+                */
 
 
                 scope.$watch('data.groupColors', function(newValues, oldValues){
@@ -308,13 +318,18 @@
                     });
                 }, true);
 
-                scope.$watch('data.activeSector', function(groupLabel){
-                    clock.stop().animate({transform: ""}, 250);
-                    if(groupLabel){
-                        var group = groupSets[groupLabel];
-                        group.stop().animate({transform: "s1.1 1.1 " + cx + " " + cy}, 250);
+                scope.$watch('data.activeGroups', function(activeGroups){
+                    if(activeGroups.length) {
+                        angular.forEach(groupSets, function(set, key) {
+                            if(_.contains(activeGroups, key)) {
+                                set.stop().animate({transform: "s1.1 1.1 " + cx + " " + cy}, 250);
+                            } else {
+                                set.stop().animate({transform: ""}, 250);
+                            }
+                        });
                     }
-                });
+                    
+                }, true);
 
 
             }

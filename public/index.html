@@ -11,6 +11,7 @@
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
     <link rel="stylesheet" type="text/css" href="css/app.css"/>
 
+    <script src="js/underscore.js"></script>
     <script src="js/jquery.js"></script>
     <script src="js/raphael.js"></script>
     <script src="js/colorpicker.js"></script>
@@ -45,10 +46,11 @@
                                 <td></td>
                             </tr>
                         </table>
+                        {{data.activeGroups}}
                     </div>
                 </accordion-group>
 
-                <accordion-group heading="Groups" is-open="accordion.groups">
+                <!--accordion-group heading="Groups" is-open="accordion.groups">
                     <tabset>
                         <tab heading="Presets">
                             <table id="group-presets-table">
@@ -261,7 +263,7 @@
                             </table>
                         </tab>
                     </tabset>
-                </accordion-group>
+                </accordion-group -->
 
                 <accordion-group heading="Options" is-open="accordion.options">
                     <div class="option-label">Name:</div>
