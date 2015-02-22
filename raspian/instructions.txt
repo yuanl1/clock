@@ -97,3 +97,5 @@ sudo dd if=/dev/sdx of=/path/to/image bs=1M
 sudo dd if=rpi_backkup1.iso of=/dev/sdx bs=1024
 
 
+//Redirect 80 to 8080
+sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-ports 8080
