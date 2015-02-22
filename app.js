@@ -54,7 +54,7 @@
     app.use(express.bodyParser());
 
     //Post to /presets adds a new preset
-    app.post('/presets', function(req, res){
+    app.post('/api/presets', function(req, res){
         db.serialize(function(){
             db.run("PRAGMA foreign_keys = ON;");
             db.run("DELETE FROM Presets WHERE name = ?;", req.body.name);
@@ -117,7 +117,7 @@
     var selectableGroups = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'];
 
     //Retrieves the preset with the given ID
-    app.get('/presets/:id', function(req, res){
+    app.get('/api/presets/:id', function(req, res){
         db.serialize(function(){
             var stmt = db.prepare("SELECT * FROM Presets INNER JOIN States ON Presets.name = States.preset_name WHERE Presets.id = ?;", req.params.id);
             stmt.all(function(err, rows){
@@ -149,7 +149,7 @@
         });
     });
 
-    app.del('/presets/:id', function(req, res){
+    app.del('/api/presets/:id', function(req, res){
         db.serialize(function(){
             db.run("PRAGMA foreign_keys = ON;");
             db.run("DELETE FROM Presets WHERE id = ?;", req.params.id, function(err){
@@ -163,7 +163,7 @@
     });
 
     //Retrieves the list of presets
-    app.get('/presets', function(req, res){
+    app.get('/api/presets', function(req, res){
         db.serialize(function() {
             var stmt = db.prepare("SELECT * from Presets;");
             stmt.all(function(err, rows){
@@ -181,7 +181,7 @@
      *  /light_leds?light_number=ALL&r=1000&g=0&b=0&time=5000 set all lights to red over 5 seconds
      *  /light_leds?light_number=1,2,3&r=1000,1000,1000&g=0,0,0&b=g=0,0,0&time=1000,1000,1000 set 3 lights to red over 1 seconds
      */
-    app.get('/light_leds', function(req, res){
+    app.get('/api/light_leds', function(req, res){
         var light_numbers = [];
         var red_values = [];
         var green_values = [];
@@ -232,7 +232,7 @@
     /*
      *	/light_led?light_number=0&r=1000&g=0&b=0&time=5000 set 1 led to red over 5 seconds
      */
-    app.get('/light_led', function(req, res){
+    app.get('/api/light_led', function(req, res){
         //Create the string to send over serial to the Arduino (space delimited with newline ending)
 
         var light_number = parseInt(req.query.light_number);
@@ -262,7 +262,7 @@
         res.send(serialString);
     });
 
-    app.get('/current_lights', function(req, res){
+    app.get('/api/current_lights', function(req, res){
         res.send(cached_light_data);
     });
 

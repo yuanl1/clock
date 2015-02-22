@@ -3,7 +3,7 @@
         var baseUrl = window.location.href;
         return {
             delete : function(scope, callback){
-                var url = baseUrl + "presets/" + scope.data.id + "/";
+                var url = baseUrl + "api/presets/" + scope.data.id + "/";
                 $http.delete(url).success(function(data){
                     callback(data);
                 });
@@ -12,7 +12,7 @@
                 //ensure that the current saved state is not stale
                 scope.UpdateCurrentState();
 
-                var url = baseUrl + "presets/"
+                var url = baseUrl + "api/presets/"
                 var postData = {
                     name : scope.data.name,
                     states : scope.data.states,
@@ -25,21 +25,21 @@
 
             },
             getPreset : function(id, callback){
-                var url = baseUrl + "presets/" + id + "/";
+                var url = baseUrl + "api/presets/" + id + "/";
                 $http.get(url).success(function(data){
                     console.log(data);
                     callback(data);
                 });
             },
             getPresets : function(callback){
-                var url = baseUrl + "presets/"
+                var url = baseUrl + "api/presets/"
                 $http.get(url).success(function(data){
                     console.log(data);
                     callback(data);
                 });
             },
             getCurrentLights : function(callback){
-                var url = baseUrl + "current_lights/";
+                var url = baseUrl + "api/current_lights/";
                 console.log('sent: ' + url);
                 if(window.location.protocol != "file:"){
                     $http.get(url).success(function(data){
@@ -69,7 +69,7 @@
                     timeVals.push(scope.data.time);
                 }
 
-                var url = baseUrl + "light_leds?";
+                var url = baseUrl + "api/light_leds?";
                 url += $.param({
                     light_number : lightNumbers.join(),
                     r : rVals.join(),
@@ -111,7 +111,7 @@
                     }
                 }
                 //url: http://192.168.1.101/light_led?light_number=0&r=1000&g=0&b=0&time=5000
-                var url = baseUrl + "light_leds?";
+                var url = baseUrl + "api/light_leds?";
                 url += $.param({
                     light_number : lightNumbers.join(),
                     r : rVals.join(),
@@ -130,7 +130,7 @@
 
             },
             shutdown : function(scope){
-                var url = baseUrl + "light_leds?";
+                var url = baseUrl + "api/light_leds?";
                 url += $.param({
                     light_number : 'ALL',
                     r : 0,
@@ -221,7 +221,7 @@
                                 scope.data.activeGroups = [];
                                 scope.data.activeGroups.push(group);
                             }
-                            
+
                             scope.data.activeColor = groupColor;
                         });
                     });
@@ -326,7 +326,7 @@
                             set.stop().animate({transform: ""}, 250);
                         }
                     });
-                    
+
                 }, true);
 
 
