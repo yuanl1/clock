@@ -46,7 +46,7 @@
                                 <td></td>
                             </tr>
                         </table>
-                        {{data.activeGroups}}
+
                     </div>
                 </accordion-group>
 
@@ -272,8 +272,8 @@
                         <button class="btn btn-primary" ng-click="Save()">Save</button>
                         <button class="btn btn-primary" ng-click="Delete()">Delete</button>
                     </div>
-                    <div class="option-label">Duration (ms):</div>
-                    <input type="number" ng-model="data.duration"/>
+                    <!--div class="option-label">Duration (ms):</div>
+                    <input type="number" ng-model="data.duration"/-->
                     <div class="option-label">Transition Time:</div>
                     <div class="btn-group button-container">
                         <button type="button" class="btn btn-primary" ng-model="data.time" btn-radio=200>0s</button>
@@ -303,7 +303,7 @@
 
         </div>
         <div id="content-pane">
-            <div id="app-toolbar">
+            <!--div id="app-toolbar">
                 <div class="btn-group">
                     <button type="button" class="btn btn-primary" ng-disabled=" data.states.length <= 1 " ng-model="data.playAnimation" btn-radio=true ng-click="PlayAnimation()">Play</button>
                     <button type="button" class="btn btn-primary" ng-disabled=" data.states.length <= 1 " ng-model="data.playAnimation" btn-radio=false ng-click="StopAnimation()" >Stop</button>
@@ -315,7 +315,7 @@
                 <span>{{data.index + 1}}/{{data.states.length}}</span>
                 <button class="btn btn-primary" ng-disabled=" data.states.length <= 1 || data.index == (data.states.length - 1) " ng-click="ApplyNextState()">&gt</button>
                 <button class="btn btn-primary" ng-disabled="data.index == (data.states.length -1)" ng-click="ApplyLastState()">&gt&gt</button>
-            </div>
+            </div-->
             <div clock size="700" id="clock-container"></div>
         </div>
     </div>
