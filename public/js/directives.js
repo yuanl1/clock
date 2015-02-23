@@ -312,7 +312,14 @@
                        if(oldValues[key] != value){
                            var set = groupSets[key];
                            if(set){
-                            set.attr('fill', value);
+                            //HACK!!!! Mapping actual values sent to the clock to
+                            //values for display (since they don't match up) for
+                            //certain colors
+                            var displayColor = value;
+                            if (value == '#FF4600') displayColor = '#FF7300';
+                            if (value == '#FF7800') displayColor = '#FFFF00';
+                            if (value == '#4D00FF') displayColor = '#8100FF';
+                            set.attr('fill', displayColor);
                            }
                        }
                     });
