@@ -2,9 +2,10 @@
 	"name" : "raspberrypi-clock",
 	"version" : "1.0.0",
 	"dependencies" : {
+		"cron" : "1.0.x",
 		"express" : "3.4.3",
-		"underscore" : "1.8.1",
+		"serialport" : "1.2.2",
 		"sqlite3" : "3.0.5",
-		"serialport" : "1.2.2"
+		"underscore" : "1.8.1"
 	}
 }

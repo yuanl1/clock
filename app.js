@@ -1,12 +1,14 @@
 //Anonymous function (to not pollute the global namespace)
 (function(){
-
-    var express = require('express');
+    var CronJob = require('cron').CronJob;
+    var Express = require('express');
     var _ = require('underscore');
+    var Sqlite3 = require('sqlite3').verbose();
+   
+    //Initialize DB 
+    var db = new Sqlite3.Database(__dirname + '/db/clock.db');
 
-    var sqlite3 = require('sqlite3').verbose();
-    var db = new sqlite3.Database(__dirname + '/db/clock.db');
-
+    //Initialize Serial Port
     var serialport = require('serialport');
     var SerialPort = serialport.SerialPort;
     var serialPort = new SerialPort("/dev/ttyUSB0", {
@@ -14,12 +16,46 @@
         parser: serialport.parsers.readline("\n")
     }, false);
 
+    //Initialize stored led values
     var cached_light_data = [];
     var total_lights = 12;
     for(var i = 0; i < total_lights; i++){
         var light_object = {r: 0, g: 0, b: 0};
         cached_light_data.push(light_object);
     }
+
+    //Initialize latest interacted with time
+    var lastSet = Date.now();
+
+    // * * * * *  command to execute
+    // │ │ │ │ │
+    // │ │ │ │ │
+    // │ │ │ │ └───── day of week (0 - 6) (0 to 6 are Sunday to Saturday, or use names; 7 is Sunday, the same as 0)
+    // │ │ │ └────────── month (1 - 12)
+    // │ │ └─────────────── day of month (1 - 31)
+    // │ └──────────────────── hour (0 - 23)
+    // └───────────────────────── min (0 - 59)
+ 
+    //Initialize periodic task
+    var job = new CronJob('0,15,30,45 * * * *', function() {
+        var now = Date.now();
+        if( (now - lastSet) > 60 * 60 * 1000 ) {
+            var serialStrings = "";
+            cached_light_data = [];
+            for(var i = 0; i < total_lights; i++){
+                var light_object = {r: 0, g: 0, b: 0};
+                cached_light_data.push(light_object);
+                serialStrings += i + " 0 0 0 1000" + '\n';
+            }
+            
+            serialPort.write(serialStrings, function(err, results) {
+                if(err) console.log('err: ' + err);
+            });
+
+            lastSet = now;
+        }
+    }, true, "America/New_York");
+
 
     //Setup serial communication (open serial port & setup reading callback handler)
     serialPort.open(function() {
@@ -45,13 +81,19 @@
         });
     });
 
-    var app = express();
+    var app = Express();
+
+    //update lastSet for each request
+    app.use(function (req, res, next) {
+        lastSet = Date.now();
+        next();
+    });
 
     //Serve files in /public
-    app.use(express.static(__dirname + '/public'));
+    app.use(Express.static(__dirname + '/public'));
 
     //Parses post body
-    app.use(express.bodyParser());
+    app.use(Express.bodyParser());
 
     //Post to /presets adds a new preset
     app.post('/api/presets', function(req, res){
