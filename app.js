@@ -38,10 +38,14 @@
  
     //Initialize periodic task
     var job = new CronJob('0,15,30,45 * * * *', function() {
+        var options = {
+            weekday: "long", year: "numeric", month: "short",
+            day: "numeric", hour: "2-digit", minute: "2-digit"
+        };
+
         var now = Date.now();
-        console.log("now: " + now);
-        console.log("lastSet: " + lastSet);
-        console.log("diff: " + now - lastSet);
+        console.log("now: " + now.toLocaleTimeString("en-us", options));
+        console.log("lastSet: " + lastSet.toLocaleTimeString("en-us", options));
 
         if( (now - lastSet) > 60 * 60 * 1000 ) {
             var serialStrings = "";
@@ -57,6 +61,7 @@
             });
 
             lastSet = now;
+            console.log("Shutting down after 1 hour of inactivity");
         }
     }, true, "America/New_York");
 
