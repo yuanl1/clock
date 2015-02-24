@@ -39,6 +39,10 @@
     //Initialize periodic task
     var job = new CronJob('0,15,30,45 * * * *', function() {
         var now = Date.now();
+        console.log("now: " + now);
+        console.log("lastSet: " + lastSet);
+        console.log("diff: " + now - lastSet);
+
         if( (now - lastSet) > 60 * 60 * 1000 ) {
             var serialStrings = "";
             cached_light_data = [];
