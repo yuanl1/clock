@@ -25,7 +25,7 @@
     }
 
     //Initialize latest interacted with time
-    var lastSet = Date.now();
+    var lastSet = new Date();
 
     // * * * * *  command to execute
     // │ │ │ │ │
@@ -38,14 +38,10 @@
  
     //Initialize periodic task
     var job = new CronJob('0,15,30,45 * * * *', function() {
-        var options = {
-            weekday: "long", year: "numeric", month: "short",
-            day: "numeric", hour: "2-digit", minute: "2-digit"
-        };
 
-        var now = Date.now();
-        console.log("now: " + now.toLocaleTimeString("en-us", options));
-        console.log("lastSet: " + lastSet.toLocaleTimeString("en-us", options));
+        var now = new Date();
+        console.log("now: " + now.toString());
+        console.log("lastSet: " + lastSet.toString());
 
         if( (now - lastSet) > 60 * 60 * 1000 ) {
             var serialStrings = "";
@@ -94,7 +90,8 @@
 
     //update lastSet for each request
     app.use(function (req, res, next) {
-        lastSet = Date.now();
+        lastSet = new Date();
+        console.log("lastSet: " + lastSet.toString());
         next();
     });
 
