@@ -1,0 +1,26 @@
+{
+  "name": "clock",
+  "version": "0.0.0",
+  "homepage": "https://github.com/yuanl1/clock",
+  "authors": [
+    "Kevin Li <yuan.kevin.li@gmail.com>"
+  ],
+  "description": "Web UI to control the Chill Spot Clock",
+  "keywords": [
+    "chill",
+    "spot",
+    "clock"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-material": "~0.8.3"
+  }
+}
