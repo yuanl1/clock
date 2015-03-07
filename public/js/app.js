@@ -1,10 +1,21 @@
 (function(){
   angular
-    .module('clockApp', ['ngMaterial'])
-    .config(function($mdThemingProvider){
-            $mdThemingProvider.theme('default')
-                .primaryPalette('brown')
-                .accentPalette('red');
+    .module('clockApp', ['ngMaterial', 'ngRoute'])
+    .config(function($mdThemingProvider, $mdIconProvider, $routeProvider){
+        $mdIconProvider
+          .icon("menu", "../img/ic_menu_24px.svg")
+          .icon("home", "../img/ic_home_24px.svg")
+          .icon("clock", "../img/ic_access_time_24px.svg")
+          .icon("favorite", "../img/ic_favorite_24px.svg")
+          .icon("settings", "../img/ic_settings_24px.svg");
+        
+        $mdThemingProvider.theme('default')
+          .primaryPalette('light-blue')
+          .accentPalette('blue');
+
+        $routeProvider
+          .when('/', {templateUrl: 'partials/clock.html'})
+          .when('/saves', {templateUrl: 'partials/saves.html'});
     })
     .controller('ClockCtrl', ['$mdSidenav', '$mdBottomSheet', '$log',
       ClockController
@@ -21,6 +32,7 @@
     var self = this;
 
     self.title = "Angular Material - Starter App"
+    self.toggleList   = toggleMenuList;
 
 
     // *********************************
@@ -30,7 +42,7 @@
     /**
      * Hide or Show the 'left' sideNav area
      */
-    function toggleUsersList() {
+    function toggleMenuList() {
       $mdSidenav('left').toggle();
     }
 
