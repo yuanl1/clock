@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="css/app.css"/>
   </head>
 
-  <body ng-app="clockApp" layout="column" ng-controller="AppCtrl as app">
+  <body ng-app="clockApp" layout="column" ng-controller="AppCtrl as app" md-theme="{{app.color}}">
 
     <md-toolbar layout="row">
       <md-button class="menu" hide-gt-sm ng-click="app.toggleList()" aria-label="Show User List">
@@ -25,13 +25,12 @@
     <div flex layout="row">
 
         <md-sidenav md-is-locked-open="$media('gt-sm')" class="md-whiteframe-z2" md-component-id="left">
-          <!--div id="menu-hero"></div-->
           <md-list>
             <md-item>
               <md-item-content class="menu-item">
                 <md-icon md-svg-icon="clock" ></md-icon>
                 <md-button href="#/" ng-click="app.toggleList()">Command Center</md-button>
-              </md-item-content>     
+              </md-item-content>
             </md-item>
 
             <md-item>
@@ -41,15 +40,22 @@
               </md-item-content>
             </md-item>
 
+            <md-item>
+              <md-item-content class="menu-item">
+                <md-icon md-svg-icon="settings" ></md-icon>
+                <md-button href="#/settings"  ng-click="app.toggleList()">Settings</md-button>
+              </md-item-content>
+            </md-item>
+
           </md-list>
         </md-sidenav>
 
-        <md-content flex id="content">
-          <div ng-view></div>
+        <md-content id="content" ng-view>
         </md-content>
 
     </div>
 
+    <script src="./bower_components/raphael/raphael.js"></script>
     <script src="./bower_components/angular/angular.js"></script>
     <script src="./bower_components/angular-animate/angular-animate.js"></script>
     <script src="./bower_components/angular-aria/angular-aria.js"></script>
@@ -58,6 +64,8 @@
     <script type="text/javascript" src="./js/app.js"></script>
     <script type="text/javascript" src="./js/command_center.js"></script>
     <script type="text/javascript" src="./js/favorites.js"></script>
+    <script type="text/javascript" src="./js/clock_directive.js"></script>
+    <script type="text/javascript" src="./js/color_option_directive.js"></script>
 
 
   </body>

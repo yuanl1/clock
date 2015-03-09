@@ -6,7 +6,19 @@
 
   function CommandCenterController($log) {
   	var self = this;
-  	self.name = "Command Center"
+
+
+  	self.ledColor = {
+      r: 0,
+      g: 0,
+      b: 0
+    };
+
+    self.webColor = {
+      r: 0,
+      g: 0,
+      b: 0
+    };
 
   }
 

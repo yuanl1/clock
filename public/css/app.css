@@ -6,6 +6,47 @@ html, body {
   padding: 0px;
 }
 
+/* Theme Colors */
+.red {
+  background: rgb(244,67,54);
+}
+
+.pink {
+  background: rgb(233,30,99);
+}
+
+.purple {
+  background: rgb(156,39,176);
+}
+
+.blue {
+ background: rgb(33,110,243);
+}
+
+.light-blue {
+  background: rgb(3,169,244);
+}
+
+.green {
+  background: rgb(76,175,80);
+}
+
+.lime {
+  background: rgb(205,220,57);
+}
+
+.amber {
+  background: rgb(255,193,7);
+}
+
+.orange {
+  background: rgb(255,152,0);
+}
+
+.grey {
+  background: rgb(158,158,158);
+}
+
 /* Toolbar area */
 
 .menu {
@@ -21,11 +62,6 @@ md-toolbar h1 {
 }
 
 /* Sidenav area */
-#menu-hero {
-  width: 304px;
-  height: 130px;
-  background-image: url("/img/menu_hero.jpg");
-}
 
 md-list .menu-item {
   padding: 20px 20px 0px 20px;
@@ -37,6 +73,7 @@ md-list .md-button {
   text-align: left;
   width: 100%;
 }
+
 md-list .md-button.selected {
   color: #03a9f4;
 }
@@ -45,57 +82,58 @@ md-sidenav  md-list {
   padding: 0px 0px 8px 0px;
 }
 
+md-sidenav.md-locked-open {
+  width: 250px;
+  max-width: 250px;
+  min-width: 250px;
+}
+
 
 /* Primary content area */
+.command-center {
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.color-palette {
+  display: inline-block;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-top: 10px;
+}
+
+.color-palette-group {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.color-palette-option {
+  border-radius: 100%;
+  cursor: pointer;
+  display: inline-block;
+  margin: 10px 10px 0 10px;
+  width: 30px;
+  height: 30px;
+  transition-duration: 50ms;
+}
+
+.color-palette-option:hover, .color-palette-option.selected {
+  box-shadow: 0px 8px 17px rgba(0, 0, 0, 0.2);
+  transform: scale(1.3);
+}
 
 #content {
   overflow: hidden;
 }
 
 #content  {
-  padding-left: 40px;
-  padding-right: 40px;
-  padding-top: 5px;
-}
-
-#content .md-button.share {
-  background-color: transparent;
-  border: none;
-  width: 48px;
-  height: 48px;
-  margin: 8px auto 16px 0;
-  position: absolute;
-  top: 10px;
-  right: 25px;
-}
-
-#content md-icon.avatar {
-  margin-top: 10px;
-}
-
-#content .md-button.share > md-icon {
-  fill:black;
-  width:36px;
-  height:36px;
-}
-
-md-button.menuBtn > md-icon {
-  fill:white;
-  width:24px;
-  height:24px;
-}
-
-#content .md-button.share:active > md-icon {
-  background-color: #dadada;
-  border-radius: 75%;
-  padding:4px;
-  transition: all 100ms ease-out 30ms;
-}
-
-#content img {
-  display: block;
-  height: auto;
-  max-width: 500px;
+  width: 100%;
+  min-width: 320px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 20px;
 }
 
 /* Utils */
@@ -109,32 +147,5 @@ md-button.menuBtn > md-icon {
 md-toolbar h1 {
   font-size: 1.250em;
   font-weight: 400;
-}
-
-.avatar {
-  position: relative;
-  width: 128px;
-  height: 128px;
-  border: 1px solid #ddd;
-  border-radius: 50%;
-  display: inline-block;
-  overflow: hidden;
-  margin: 0px;
-  vertical-align: middle;
-  zoom:0.70;
-  transform: translateZ(0);
-  -webkit-transform: scale(0.70);
-  -moz-transform:scale(0.70);
-}
-
-
-md-bottom-sheet  md-icon {
-  margin-right:20px;
-}
-
-span.name {
-  font-weight: bold;
-  font-size:1.1em;
-  padding-left:5px;
 }
 
