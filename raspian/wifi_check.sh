@@ -20,15 +20,17 @@
 #
 # Instructions:
 #
-# o Install where you want to run it from like /usr/local/bin
-# o chmod 0755 /usr/local/bin/WiFi_Check
+# o Install where you want to run it
+# o cp wifi_check.sh /usr/local/bin
+# o chmod 755 /usr/local/bin/WiFi_Check
 # o Add to crontab
+# o crontab -e
 #
 # Run Every 5 mins - Seems like ever min is over kill unless
 # this is a very common problem.  If once a min change */5 to *
 # once every 2 mins */5 to */2 ...
 #
-# */5 * * * * /usr/local/bin/WiFi_Check
+# */5 * * * * /usr/local/bin/wifi_check.sh
 #
 ##################################################################
 # Settings
