@@ -97,6 +97,10 @@ md-sidenav.md-locked-open {
   text-align: center;
 }
 
+clock path {
+  cursor: pointer;
+}
+
 .color-palette {
   display: inline-block;
   padding-left: 10px;

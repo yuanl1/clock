@@ -1,6 +1,6 @@
 (function() {
   angular.module('clockApp')
-    .directive("clock", function($window) {
+    .directive("clock", function(colorMap, clockService, $window) {
 
 
       function sector(paper, cx, cy, r, startAngle, endAngle, params) {
@@ -17,11 +17,13 @@
         replace : true,
         link: function(scope, element, attr){
           var sectorAngles = [30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30],
+              sectorIds = [2, 1, 0, 11, 10, 9, 8, 7, 6, 5, 4, 3];
               size = 600,
               cx = size/2,
               cy = size/2,
-              r = (size/2),
+              r = (size - 40)/2,
               angle = 0,
+              ms = 50,
               paper = $window.Raphael(element[0]),
               clock = paper.set(),
               sectors = [],
@@ -36,6 +38,16 @@
 
           sectorAngles.forEach(function(anglePlus, index) {
             var sect = sector(paper, cx, cy, r, angle, angle + anglePlus, params);
+            sect.data("id", sectorIds[index]);
+
+            sect.click(function(e){
+              var webColor = colorMap[scope.app.color].web;
+              var ledColor = colorMap[scope.app.color].led;
+              var hexColor = $window.Raphael.rgb(webColor.r, webColor.g, webColor.b);
+              sect.stop().animate({fill: hexColor}, ms);
+              clockService.send(sect.data("id"), ledColor.r, ledColor.g, ledColor.b);
+            });
+
             sectors.push(sect);
             clock.push(sect);
 

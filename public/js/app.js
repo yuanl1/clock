@@ -1,7 +1,7 @@
 (function(){
   angular
     .module('clockApp', ['ngMaterial', 'ngRoute'])
-    .config(function($mdThemingProvider, $mdIconProvider, $routeProvider){
+    .config(function($mdThemingProvider, $mdIconProvider, $routeProvider, $logProvider){
       $mdIconProvider
         .icon("menu", "../img/ic_menu_24px.svg")
         .icon("home", "../img/ic_home_24px.svg")
@@ -46,8 +46,132 @@
       $routeProvider
         .when('/', {templateUrl: 'partials/command_center.html'})
         .when('/saves', {templateUrl: 'partials/favorites.html'});
+
+      $logProvider.debugEnabled(true);
     })
-    .controller('AppCtrl', ['$mdSidenav', '$mdBottomSheet', '$log',
+    .value('colorMap', {
+      "red" : {
+        web : {
+          r: 244,
+          g: 67,
+          b: 54
+        },
+        led : {
+          r: 4095,
+          g: 0,
+          b: 0
+        }
+      },
+      "pink" : {
+        web : {
+          r: 233,
+          g: 30,
+          b: 99
+        },
+        led : {
+          r: 0,
+          g: 0,
+          b: 0
+        }
+      },
+      "purple" : {
+        web : {
+          r: 156,
+          g: 39,
+          b: 176
+        },
+        led : {
+          r: 0,
+          g: 0,
+          b: 0
+        }
+      },
+      "blue" : {
+        web : {
+          r: 33,
+          g: 110,
+          b: 243
+        },
+        led : {
+          r: 4095,
+          g: 0,
+          b: 0
+        }
+      },
+      "light-blue" : {
+        web : {
+          r: 3,
+          g: 169,
+          b: 244
+        },
+        led : {
+          r: 0,
+          g: 0,
+          b: 0
+        }
+      },
+      "green" : {
+        web : {
+          r: 76,
+          g: 175,
+          b: 80
+        },
+        led : {
+          r: 0,
+          g: 4095,
+          b: 0
+        }
+      },
+      "lime" : {
+        web : {
+          r: 205,
+          g: 220,
+          b: 57
+        },
+        led : {
+          r: 0,
+          g: 0,
+          b: 0
+        }
+      },
+      "amber" : {
+        web : {
+          r: 255,
+          g: 193,
+          b: 7
+        },
+        led : {
+          r: 0,
+          g: 0,
+          b: 0
+        }
+      },
+      "orange" : {
+        web : {
+          r: 255,
+          g: 152,
+          b: 0
+        },
+        led : {
+          r: 0,
+          g: 0,
+          b: 0
+        }
+      },
+      "grey" : {
+        web : {
+          r: 158,
+          g: 158,
+          b: 158
+        },
+        led : {
+          r: 0,
+          g: 0,
+          b: 0
+        }
+      },
+    })
+    .controller('AppCtrl', ['colorMap', '$mdSidenav', '$mdBottomSheet', '$log',
       AppController
     ]);
 
@@ -58,15 +182,15 @@
    * @param avatarsService
    * @constructor
    */
-  function AppController($mdSidenav, $mdBottomSheet, $log ) {
+  function AppController(colorMap, $mdSidenav, $mdBottomSheet, $log ) {
     var self = this;
 
     self.toggleList = toggleMenuList;
     self.color = 'red'; //Default color
 
-    self.setColor = function (color) {
+    self.setAppColor = function (color) {
       self.color = color;
-    }
+    };
 
 
     // *********************************

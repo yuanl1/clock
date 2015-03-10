@@ -8,7 +8,7 @@
         link: function(scope, element, attr) {
 
           element.on('click', function (event) {
-            scope.app.setColor(attr.color);
+            scope.app.setAppColor(attr.color);
             scope.$apply();
           });
 
