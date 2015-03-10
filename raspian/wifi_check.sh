@@ -35,7 +35,7 @@
 ##################################################################
 # Settings
 # Where and what you want to call the Lockfile
-lockfile='/var/run/WiFi_Check.pid'
+lockfile='/var/run/wifi_check.pid'
 # Which Interface do you want to check/fix
 wlan='wlan0'
 ##################################################################
