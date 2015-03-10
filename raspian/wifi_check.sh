@@ -39,6 +39,10 @@ lockfile='/var/run/wifi_check.pid'
 # Which Interface do you want to check/fix
 wlan='wlan0'
 ##################################################################
+
+# Set the path
+export PATH="/sbin:/bin"
+
 echo
 echo "Starting WiFi check for $wlan"
 date
