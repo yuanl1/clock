@@ -1,13 +1,10 @@
 (function(){
   angular.module('clockApp')
     .service('clockService', function($http, $window, $log){
-      var baseUrl = window.location.href;
       return {
         getCurrentLights : function(callback){
-          var url = baseUrl + "api/current_lights/";
-          $log.debug('request: ' + url);
-          $http.get(url).success(function(data){
-          $log.debug(data);
+          $http.get('/api/current_lights').success(function(data){
+            $log.debug(data);
             callback(data);
           });
         },
