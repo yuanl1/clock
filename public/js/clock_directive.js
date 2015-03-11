@@ -26,7 +26,6 @@
               ms = 50,
               paper = $window.Raphael(element[0]),
               clock = paper.set(),
-              sectors = [],
               params = {
                 "fill": "#9e9e9e",
                 "stroke": "#ffffff",
@@ -41,18 +40,30 @@
             sect.data("id", sectorIds[index]);
 
             sect.click(function(e){
-              var webColor = colorMap[scope.app.color].web;
-              var ledColor = colorMap[scope.app.color].led;
+              var webColor = colorMap.getWebColor(scope.app.color);
+              var ledColor = colorMap.getLedColor(scope.app.color);
               var hexColor = $window.Raphael.rgb(webColor.r, webColor.g, webColor.b);
               sect.stop().animate({fill: hexColor}, ms);
               clockService.send(sect.data("id"), ledColor.r, ledColor.g, ledColor.b);
             });
 
-            sectors.push(sect);
             clock.push(sect);
-
             angle = angle + anglePlus;
           });
+
+          function init (data) {
+              clock.forEach( function (sect) {
+                  var id = sect.data('id');
+                  var ledColor = data[id];
+                  var colorKey = colorMap.getColorKey(ledColor.r, ledColor.g, ledColor.b);
+                  var webColor = colorMap.getWebColor(colorKey);
+                  var hexColor = $window.Raphael.rgb(webColor.r, webColor.g, webColor.b);
+
+                  sect.stop().animate({fill: hexColor}, ms);
+              });
+          }
+
+          clockService.getCurrentLights(init);
 
         }
       }; //end return

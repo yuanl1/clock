@@ -49,127 +49,76 @@
 
       $logProvider.debugEnabled(true);
     })
-    .value('colorMap', {
-      "red" : {
-        web : {
-          r: 244,
-          g: 67,
-          b: 54
+    .factory('colorMap', function() {
+      var colorMap = {
+        "red" : {
+          web : { r: 244, g: 67, b: 54 },
+          led : { r: 4095, g: 0, b: 0 }
         },
-        led : {
-          r: 4095,
-          g: 0,
-          b: 0
-        }
-      },
-      "pink" : {
-        web : {
-          r: 233,
-          g: 30,
-          b: 99
+        "pink" : {
+          web : { r: 233, g: 30, b: 99 },
+          led : { r: 4095, g: 0, b: 1000 }
         },
-        led : {
-          r: 4095,
-          g: 0,
-          b: 1000
-        }
-      },
-      "purple" : {
-        web : {
-          r: 156,
-          g: 39,
-          b: 176
+        "purple" : {
+          web : { r: 156, g: 39, b: 176 },
+          led : { r: 3000, g: 0, b: 4095 }
         },
-        led : {
-          r: 3000,
-          g: 0,
-          b: 4095
-        }
-      },
-      "blue" : {
-        web : {
-          r: 33,
-          g: 110,
-          b: 243
+        "blue" : {
+          web : { r: 33, g: 110, b: 243 },
+          led : { r: 0, g: 0, b: 4095 }
         },
-        led : {
-          r: 0,
-          g: 0,
-          b: 4095
-        }
-      },
-      "light-blue" : {
-        web : {
-          r: 3,
-          g: 169,
-          b: 244
+        "light-blue" : {
+          web : { r: 3, g: 169, b: 244 },
+          led : { r: 0, g: 1500, b: 4095 }
         },
-        led : {
-          r: 0,
-          g: 1500,
-          b: 4095
-        }
-      },
-      "green" : {
-        web : {
-          r: 76,
-          g: 175,
-          b: 80
+        "green" : {
+          web : { r: 76, g: 175, b: 80 },
+          led : { r: 0, g: 4095, b: 0 }
         },
-        led : {
-          r: 0,
-          g: 4095,
-          b: 0
-        }
-      },
-      "lime" : {
-        web : {
-          r: 205,
-          g: 220,
-          b: 57
+        "lime" : {
+          web : { r: 205, g: 220, b: 57 },
+          led : { r: 3000, g: 4095, b: 0 }
         },
-        led : {
-          r: 3000,
-          g: 4095,
-          b: 0
-        }
-      },
-      "amber" : {
-        web : {
-          r: 255,
-          g: 193,
-          b: 7
+        "amber" : {
+          web : { r: 255,  g: 193, b: 7 },
+          led : { r: 4095, g: 2000, b: 0 }
         },
-        led : {
-          r: 4095,
-          g: 2000,
-          b: 0
-        }
-      },
-      "orange" : {
-        web : {
-          r: 255,
-          g: 152,
-          b: 0
+        "orange" : {
+          web : { r: 255, g: 152, b: 0 },
+          led : { r: 4095, g: 500, b: 0}
         },
-        led : {
-          r: 4095,
-          g: 500,
-          b: 0
+        "grey" : {
+          web : { r: 158, g: 158, b: 158 },
+          led : { r: 0, g: 0, b: 0 }
         }
-      },
-      "grey" : {
-        web : {
-          r: 158,
-          g: 158,
-          b: 158
-        },
-        led : {
-          r: 0,
-          g: 0,
-          b: 0
-        }
-      },
+      };
+
+      function getWebColor (colorKey) {
+        return colorMap[colorKey].web;
+      }
+
+      function getLedColor (colorKey) {
+        return colorMap[colorKey].led;
+      }
+
+      function getColorKey (r, g, b) {
+        var color = "grey";
+        angular.forEach(colorMap, function(value, key) {
+          if (value.web.r == r && value.web.g == g && value.web.b == b) {
+            color = key;
+          } else if (value.led.r == r && value.led.g == g && value.led.b == b) {
+            color = key;
+          }
+        });
+
+        return color;
+      }
+
+      return {
+        getWebColor: getWebColor,
+        getLedColor: getLedColor,
+        getColorKey: getColorKey
+      };
     })
     .controller('AppCtrl', ['colorMap', '$mdSidenav', '$mdBottomSheet', '$log',
       AppController
