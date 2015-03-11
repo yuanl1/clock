@@ -9,16 +9,9 @@
 
           element.on('click', function (event) {
             scope.app.setAppColor(attr.color);
+            element.parent().parent().find("color-option").removeClass('selected');
+            element.addClass('selected');
             scope.$apply();
-          });
-
-          scope.$watch('app.color', function(newColor) {
-              if (newColor === attr.color) {
-                element.addClass('selected');
-              } else {
-                element.removeClass('selected');
-              }
-
           });
 
         }

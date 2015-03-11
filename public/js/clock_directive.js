@@ -17,7 +17,7 @@
         replace : true,
         link: function(scope, element, attr){
           var sectorAngles = [30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30],
-              sectorIds = [2, 1, 0, 11, 10, 9, 8, 7, 6, 5, 4, 3];
+              sectorIds = [2, 1, 0, 11, 10, 9, 8, 7, 6, 5, 4, 3],
               size = 600,
               cx = size/2,
               cy = size/2,
